@@ -34,10 +34,27 @@ namespace Woodpecker
         private string button8_up = "";
         private string button9_down = "";
         private string button9_up = "";
+        private string button10_down = "";
+        private string button10_up = "";
+        private string button11_down = "";
+        private string button11_up = "";
+        private string button12_down = "";
+        private string button12_up = "";
+        private bool oneshot_mode = false;
 
         public FormGPIO()
         {
             InitializeComponent();
+        }
+
+        private void FormGPIO_Shown(object sender, EventArgs e)
+        {
+            GlobalData.FormGPIO = true;
+        }
+
+        private void FormGPIO_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            GlobalData.FormGPIO = false;
         }
 
         private void LoadGpioDB(string xmlfile)
@@ -52,68 +69,89 @@ namespace Woodpecker
                     {
                         switch (GPIOCode.Attribute("Name").Value)
                         {
-                            case "GPIO1":
+                            case "GPIO01":
                                 button1.Text = GPIOCode.Element("GPIO_N").Value;
                                 button1_down = GPIOCode.Element("GPIO_D").Value + "\r\n";
                                 button1_up = GPIOCode.Element("GPIO_U").Value + "\r\n";
                                 button1.MouseDown += new MouseEventHandler(button_MouseDown);
                                 button1.MouseUp += new MouseEventHandler(button_MouseUp);
                                 break;
-                            case "GPIO2":
+                            case "GPIO02":
                                 button2.Text = GPIOCode.Element("GPIO_N").Value;
                                 button2_down = GPIOCode.Element("GPIO_D").Value + "\r\n";
                                 button2_up = GPIOCode.Element("GPIO_U").Value + "\r\n";
                                 button2.MouseDown += new MouseEventHandler(button_MouseDown);
                                 button2.MouseUp += new MouseEventHandler(button_MouseUp);
                                 break;
-                            case "GPIO3":
+                            case "GPIO03":
                                 button3.Text = GPIOCode.Element("GPIO_N").Value;
                                 button3_down = GPIOCode.Element("GPIO_D").Value + "\r\n";
                                 button3_up = GPIOCode.Element("GPIO_U").Value + "\r\n";
                                 button3.MouseDown += new MouseEventHandler(button_MouseDown);
                                 button3.MouseUp += new MouseEventHandler(button_MouseUp);
                                 break;
-                            case "GPIO4":
+                            case "GPIO04":
                                 button4.Text = GPIOCode.Element("GPIO_N").Value;
                                 button4_down = GPIOCode.Element("GPIO_D").Value + "\r\n";
                                 button4_up = GPIOCode.Element("GPIO_U").Value + "\r\n";
                                 button4.MouseDown += new MouseEventHandler(button_MouseDown);
                                 button4.MouseUp += new MouseEventHandler(button_MouseUp);
                                 break;
-                            case "GPIO5":
+                            case "GPIO05":
                                 button5.Text = GPIOCode.Element("GPIO_N").Value;
                                 button5_down = GPIOCode.Element("GPIO_D").Value + "\r\n";
                                 button5_up = GPIOCode.Element("GPIO_U").Value + "\r\n";
                                 button5.MouseDown += new MouseEventHandler(button_MouseDown);
                                 button5.MouseUp += new MouseEventHandler(button_MouseUp);
                                 break;
-                            case "GPIO6":
+                            case "GPIO06":
                                 button6.Text = GPIOCode.Element("GPIO_N").Value;
                                 button6_down = GPIOCode.Element("GPIO_D").Value + "\r\n";
                                 button6_up = GPIOCode.Element("GPIO_U").Value + "\r\n";
                                 button6.MouseDown += new MouseEventHandler(button_MouseDown);
                                 button6.MouseUp += new MouseEventHandler(button_MouseUp);
                                 break;
-                            case "GPIO7":
+                            case "GPIO07":
                                 button7.Text = GPIOCode.Element("GPIO_N").Value;
                                 button7_down = GPIOCode.Element("GPIO_D").Value + "\r\n";
                                 button7_up = GPIOCode.Element("GPIO_U").Value + "\r\n";
                                 button7.MouseDown += new MouseEventHandler(button_MouseDown);
                                 button7.MouseUp += new MouseEventHandler(button_MouseUp);
                                 break;
-                            case "GPIO8":
+                            case "GPIO08":
                                 button8.Text = GPIOCode.Element("GPIO_N").Value;
                                 button8_down = GPIOCode.Element("GPIO_D").Value + "\r\n";
                                 button8_up = GPIOCode.Element("GPIO_U").Value + "\r\n";
                                 button8.MouseDown += new MouseEventHandler(button_MouseDown);
                                 button8.MouseUp += new MouseEventHandler(button_MouseUp);
                                 break;
-                            case "GPIO9":
+                            case "GPIO09":
                                 button9.Text = GPIOCode.Element("GPIO_N").Value;
                                 button9_down = GPIOCode.Element("GPIO_D").Value + "\r\n";
                                 button9_up = GPIOCode.Element("GPIO_U").Value + "\r\n";
                                 button9.MouseDown += new MouseEventHandler(button_MouseDown);
                                 button9.MouseUp += new MouseEventHandler(button_MouseUp);
+                                break;
+                            case "GPIO10":
+                                button10.Text = GPIOCode.Element("GPIO_N").Value;
+                                button10_down = GPIOCode.Element("GPIO_D").Value + "\r\n";
+                                button10_up = GPIOCode.Element("GPIO_U").Value + "\r\n";
+                                button10.MouseDown += new MouseEventHandler(button_MouseDown);
+                                button10.MouseUp += new MouseEventHandler(button_MouseUp);
+                                break;
+                            case "GPIO11":
+                                button11.Text = GPIOCode.Element("GPIO_N").Value;
+                                button11_down = GPIOCode.Element("GPIO_D").Value + "\r\n";
+                                button11_up = GPIOCode.Element("GPIO_U").Value + "\r\n";
+                                button11.MouseDown += new MouseEventHandler(button_MouseDown);
+                                button11.MouseUp += new MouseEventHandler(button_MouseUp);
+                                break;
+                            case "GPIO12":
+                                button12.Text = GPIOCode.Element("GPIO_N").Value;
+                                button12_down = GPIOCode.Element("GPIO_D").Value + "\r\n";
+                                button12_up = GPIOCode.Element("GPIO_U").Value + "\r\n";
+                                button12.MouseDown += new MouseEventHandler(button_MouseDown);
+                                button12.MouseUp += new MouseEventHandler(button_MouseUp);
                                 break;
                         }
                     }
@@ -161,6 +199,15 @@ namespace Woodpecker
                 case 9:
                     GlobalData.m_Arduino_Port.WriteDataOut(button9_down, button9_down.Length);
                     break;
+                case 10:
+                    GlobalData.m_Arduino_Port.WriteDataOut(button10_down, button10_down.Length);
+                    break;
+                case 11:
+                    GlobalData.m_Arduino_Port.WriteDataOut(button11_down, button11_down.Length);
+                    break;
+                case 12:
+                    GlobalData.m_Arduino_Port.WriteDataOut(button12_down, button12_down.Length);
+                    break;
             }
         }
 
@@ -196,6 +243,15 @@ namespace Woodpecker
                 case 9:
                     GlobalData.m_Arduino_Port.WriteDataOut(button9_up, button9_up.Length);
                     break;
+                case 10:
+                    GlobalData.m_Arduino_Port.WriteDataOut(button10_up, button10_up.Length);
+                    break;
+                case 11:
+                    GlobalData.m_Arduino_Port.WriteDataOut(button11_up, button11_up.Length);
+                    break;
+                case 12:
+                    GlobalData.m_Arduino_Port.WriteDataOut(button12_up, button12_up.Length);
+                    break;
             }
         }
 
@@ -215,14 +271,30 @@ namespace Woodpecker
             }
         }
 
-        private void FormGPIO_Shown(object sender, EventArgs e)
+        private void button_oneshotMode_Click(object sender, EventArgs e)
         {
-            GlobalData.FormGPIO = true;
+            string oneshot_command = "";
+            if (oneshot_mode)
+            {
+                oneshot_mode = false;
+                oneshot_command = "sos0" + "\r\n";
+                button_oneshotMode.Text = "High";
+            }
+            else
+            {
+                oneshot_mode = true;
+                oneshot_command = "sos1" + "\r\n";
+                button_oneshotMode.Text = "Low";
+            }
+            GlobalData.m_Arduino_Port.WriteDataOut(oneshot_command, oneshot_command.Length);
         }
 
-        private void FormGPIO_FormClosed(object sender, FormClosedEventArgs e)
+        private void button_oneshotSet_Click(object sender, EventArgs e)
         {
-            GlobalData.FormGPIO = false;
+            byte oneshot_GPIO = Convert.ToByte(textBox_GPIOnumber.Text);
+            ushort oneshot_delay = Convert.ToUInt16(textBox_oneshotdelay);
+            string oneshot_command = "ios" + oneshot_GPIO + "t" + oneshot_delay + "\r\n";
+            GlobalData.m_Arduino_Port.WriteDataOut(oneshot_command, oneshot_command.Length);
         }
     }
 }
