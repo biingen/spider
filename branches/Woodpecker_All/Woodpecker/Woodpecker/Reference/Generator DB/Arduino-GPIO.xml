@@ -1,50 +1,65 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <application>
 	<Keypad_Setting>
-	<GPIO Name="GPIO1">
-		<GPIO_N>GPIO1</GPIO_N>
+	<GPIO Name="GPIO01">
+		<GPIO_N>GPIO01</GPIO_N>
 		<GPIO_D>ioo21</GPIO_D>
 	    <GPIO_U>ioo20</GPIO_U>
     </GPIO>
-	<GPIO Name="GPIO2">
-		<GPIO_N>GPIO2</GPIO_N>
+	<GPIO Name="GPIO02">
+		<GPIO_N>GPIO02</GPIO_N>
 		<GPIO_D>ioo31</GPIO_D>
 	    <GPIO_U>ioo30</GPIO_U>
     </GPIO>
-	<GPIO Name="GPIO3">
+	<GPIO Name="GPIO03">
 		<GPIO_N>GPIO3</GPIO_N>
 		<GPIO_D>ioo41</GPIO_D>
 	    <GPIO_U>ioo40</GPIO_U>
     </GPIO>
-	<GPIO Name="GPIO4">
-		<GPIO_N>GPIO4</GPIO_N>
+	<GPIO Name="GPIO04">
+		<GPIO_N>GPIO04</GPIO_N>
 		<GPIO_D>ioo51</GPIO_D>
 	    <GPIO_U>ioo50</GPIO_U>
     </GPIO>
-	<GPIO Name="GPIO5">
-		<GPIO_N>GPIO5</GPIO_N>
+	<GPIO Name="GPIO05">
+		<GPIO_N>GPIO05</GPIO_N>
 		<GPIO_D>ioo61</GPIO_D>
 	    <GPIO_U>ioo60</GPIO_U>
     </GPIO>
-	<GPIO Name="GPIO6">
-		<GPIO_N>GPIO6</GPIO_N>
+	<GPIO Name="GPIO06">
+		<GPIO_N>GPIO06</GPIO_N>
 		<GPIO_D>ioo71</GPIO_D>
 	    <GPIO_U>ioo70</GPIO_U>
     </GPIO>
-	<GPIO Name="GPIO7">
-		<GPIO_N>GPIO7</GPIO_N>
+	<GPIO Name="GPIO07">
+		<GPIO_N>GPIO07</GPIO_N>
 		<GPIO_D>ioo81</GPIO_D>
 	    <GPIO_U>ioo80</GPIO_U>
     </GPIO>
-	<GPIO Name="GPIO8">
-		<GPIO_N>GPIO8</GPIO_N>
+	<GPIO Name="GPIO08">
+		<GPIO_N>GPIO08</GPIO_N>
 		<GPIO_D>ioo91</GPIO_D>
 	    <GPIO_U>ioo90</GPIO_U>
     </GPIO>
-	<GPIO Name="GPIO9">
-		<GPIO_N>GPIO9</GPIO_N>
-		<GPIO_D>ioo91</GPIO_D>
-	    <GPIO_U>ioo90</GPIO_U>
+	<GPIO Name="GPIO09">
+		<GPIO_N>GPIO09</GPIO_N>
+		<GPIO_D>ioo101</GPIO_D>
+	    <GPIO_U>ioo110</GPIO_U>
+    </GPIO>
+	<GPIO Name="GPIO10">
+		<GPIO_N>GPIO10</GPIO_N>
+		<GPIO_D>ioo111</GPIO_D>
+	    <GPIO_U>ioo110</GPIO_U>
+    </GPIO>
+	<GPIO Name="GPIO11">
+		<GPIO_N>GPIO11</GPIO_N>
+		<GPIO_D>ioo121</GPIO_D>
+	    <GPIO_U>ioo120</GPIO_U>
+    </GPIO>
+	<GPIO Name="GPIO12">
+		<GPIO_N>GPIO12</GPIO_N>
+		<GPIO_D>ioo131</GPIO_D>
+	    <GPIO_U>ioo130</GPIO_U>
     </GPIO>
 	</Keypad_Setting>
 </application>
