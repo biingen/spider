@@ -57,6 +57,20 @@ namespace Woodpecker
             GlobalData.FormGPIO = false;
         }
 
+        //判斷TextBox輸入值是否為數字
+        public static bool IsNumeric(string TextBoxValue)
+        {
+            try
+            {
+                int i = Convert.ToInt16(TextBoxValue);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private void LoadGpioDB(string xmlfile)
         {
             try
@@ -170,88 +184,94 @@ namespace Woodpecker
         private void button_MouseDown(object sender, EventArgs e)
         {
             int index = int.Parse(((Button)(sender)).Name.ToString().Replace("button", ""));
-            switch (index)
+            if (GlobalData.m_Arduino_Port.IsOpen())
             {
-                case 1:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button1_down, button1_down.Length);
-                    break;
-                case 2:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button2_down, button2_down.Length);
-                    break;
-                case 3:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button3_down, button3_down.Length);
-                    break;
-                case 4:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button4_down, button4_down.Length);
-                    break;
-                case 5:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button5_down, button5_down.Length);
-                    break;
-                case 6:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button6_down, button6_down.Length);
-                    break;
-                case 7:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button7_down, button7_down.Length);
-                    break;
-                case 8:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button8_down, button8_down.Length);
-                    break;
-                case 9:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button9_down, button9_down.Length);
-                    break;
-                case 10:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button10_down, button10_down.Length);
-                    break;
-                case 11:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button11_down, button11_down.Length);
-                    break;
-                case 12:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button12_down, button12_down.Length);
-                    break;
+                switch (index)
+                {
+                    case 1:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button1_down, button1_down.Length);
+                        break;
+                    case 2:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button2_down, button2_down.Length);
+                        break;
+                    case 3:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button3_down, button3_down.Length);
+                        break;
+                    case 4:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button4_down, button4_down.Length);
+                        break;
+                    case 5:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button5_down, button5_down.Length);
+                        break;
+                    case 6:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button6_down, button6_down.Length);
+                        break;
+                    case 7:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button7_down, button7_down.Length);
+                        break;
+                    case 8:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button8_down, button8_down.Length);
+                        break;
+                    case 9:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button9_down, button9_down.Length);
+                        break;
+                    case 10:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button10_down, button10_down.Length);
+                        break;
+                    case 11:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button11_down, button11_down.Length);
+                        break;
+                    case 12:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button12_down, button12_down.Length);
+                        break;
+                }
             }
         }
 
         private void button_MouseUp(object sender, EventArgs e)
         {
             int index = int.Parse(((Button)(sender)).Name.ToString().Replace("button", ""));
-            switch (index)
+            if (GlobalData.m_Arduino_Port.IsOpen())
             {
-                case 1:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button1_up, button1_up.Length);
-                    break;
-                case 2:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button2_up, button2_up.Length);
-                    break;
-                case 3:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button3_up, button3_up.Length);
-                    break;
-                case 4:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button4_up, button4_up.Length);
-                    break;
-                case 5:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button5_up, button5_up.Length);
-                    break;
-                case 6:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button6_up, button6_up.Length);
-                    break;
-                case 7:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button7_up, button7_up.Length);
-                    break;
-                case 8:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button8_up, button8_up.Length);
-                    break;
-                case 9:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button9_up, button9_up.Length);
-                    break;
-                case 10:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button10_up, button10_up.Length);
-                    break;
-                case 11:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button11_up, button11_up.Length);
-                    break;
-                case 12:
-                    GlobalData.m_Arduino_Port.WriteDataOut(button12_up, button12_up.Length);
-                    break;
+                switch (index)
+                {
+                    case 1:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button1_up, button1_up.Length);
+                        break;
+                    case 2:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button2_up, button2_up.Length);
+                        break;
+                    case 3:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button3_up, button3_up.Length);
+                        break;
+                    case 4:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button4_up, button4_up.Length);
+                        break;
+                    case 5:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button5_up, button5_up.Length);
+                        break;
+                    case 6:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button6_up, button6_up.Length);
+                        break;
+                    case 7:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button7_up, button7_up.Length);
+                        break;
+                    case 8:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button8_up, button8_up.Length);
+                        break;
+                    case 9:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button9_up, button9_up.Length);
+                        break;
+                    case 10:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button10_up, button10_up.Length);
+                        break;
+                    case 11:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button11_up, button11_up.Length);
+                        break;
+                    case 12:
+                        GlobalData.m_Arduino_Port.WriteDataOut(button12_up, button12_up.Length);
+                        break;
+                }
             }
         }
 
@@ -286,15 +306,22 @@ namespace Woodpecker
                 oneshot_command = "sos1" + "\r\n";
                 button_oneshotMode.Text = "Low";
             }
-            GlobalData.m_Arduino_Port.WriteDataOut(oneshot_command, oneshot_command.Length);
+            if (GlobalData.m_Arduino_Port.IsOpen())
+                GlobalData.m_Arduino_Port.WriteDataOut(oneshot_command, oneshot_command.Length);
         }
 
         private void button_oneshotSet_Click(object sender, EventArgs e)
         {
-            byte oneshot_GPIO = Convert.ToByte(textBox_GPIOnumber.Text);
-            ushort oneshot_delay = Convert.ToUInt16(textBox_oneshotdelay);
-            string oneshot_command = "ios" + oneshot_GPIO + "t" + oneshot_delay + "\r\n";
-            GlobalData.m_Arduino_Port.WriteDataOut(oneshot_command, oneshot_command.Length);
+            byte oneshot_GPIO = 0x00;
+            ushort oneshot_delay = 0x00;
+            string oneshot_command = "";
+            if (IsNumeric(textBox_GPIOnumber.Text) && IsNumeric(textBox_oneshotdelay.Text) && GlobalData.m_Arduino_Port.IsOpen())
+            {
+                oneshot_GPIO = Convert.ToByte(textBox_GPIOnumber.Text);
+                oneshot_delay = Convert.ToUInt16(textBox_oneshotdelay.Text);
+                oneshot_command = "ios" + oneshot_GPIO + "t" + oneshot_delay + "\r\n";
+                GlobalData.m_Arduino_Port.WriteDataOut(oneshot_command, oneshot_command.Length);
+            }
         }
     }
 }
