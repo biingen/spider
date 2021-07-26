@@ -13014,7 +13014,7 @@ namespace Woodpecker
                         }
                         else if (GlobalData.Arduino_recFlag && GlobalData.Arduino_Read_String != "")
                         {
-                            string l_strResult = GlobalData.Arduino_Read_String.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "").Replace("ioi", "");
+                            string l_strResult = GlobalData.Arduino_Read_String.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "").Replace("io i", "");
                             //GPIO_Read_Data = Convert.ToUInt32(l_strResult);
                             GPIO_Read_Data = Convert.ToUInt16(l_strResult, 16);
                             aGpio = true;

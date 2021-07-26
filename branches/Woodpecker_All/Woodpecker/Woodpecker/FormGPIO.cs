@@ -297,13 +297,13 @@ namespace Woodpecker
             if (oneshot_mode)
             {
                 oneshot_mode = false;
-                oneshot_command = "sos0" + "\r\n";
+                oneshot_command = "s o s 0" + "\r\n";
                 button_oneshotMode.Text = "High";
             }
             else
             {
                 oneshot_mode = true;
-                oneshot_command = "sos1" + "\r\n";
+                oneshot_command = "s o s 1" + "\r\n";
                 button_oneshotMode.Text = "Low";
             }
             if (GlobalData.m_Arduino_Port.IsOpen())
@@ -319,7 +319,7 @@ namespace Woodpecker
             {
                 oneshot_GPIO = Convert.ToByte(textBox_GPIOnumber.Text);
                 oneshot_delay = Convert.ToUInt16(textBox_oneshotdelay.Text);
-                oneshot_command = "ios" + oneshot_GPIO + "t" + oneshot_delay + "\r\n";
+                oneshot_command = "io s" + oneshot_GPIO + " t " + oneshot_delay + "\r\n";
                 GlobalData.m_Arduino_Port.WriteDataOut(oneshot_command, oneshot_command.Length);
             }
         }
