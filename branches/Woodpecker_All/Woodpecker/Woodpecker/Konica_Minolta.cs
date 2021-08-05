@@ -21,7 +21,7 @@ namespace Woodpecker
         public bool Status()
         {
             bool status = false;
-
+            GlobalData.log.Debug("CA210 status: " + isMsr + "(0: Exception, 1: Disconnect, 2: Connect, 3: CalZero)");
             if (isMsr > 1)
                 status = true;
             else

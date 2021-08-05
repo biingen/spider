@@ -11,7 +11,6 @@ using System.Reflection;                                //support BindingFlags
 using jini;
 using Woodpecker;
 using System.Collections;
-using log4net;
 
 namespace ModuleLayer
 {
@@ -23,7 +22,6 @@ namespace ModuleLayer
         public Queue<byte> ReceiveQueue = new Queue<byte>();
         public List<byte> ReceiveList = new List<byte>();
         public Queue<List<byte>> ReceiveQueueList = new Queue<List<byte>>();
-        private static ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);        //log4net
         /*
         private SerialPortConfig portConfig;
 
@@ -243,7 +241,7 @@ namespace ModuleLayer
                     string dataValue = sp.ReadLine();
                     if (dataValue.Contains("io i"))
                         GlobalData.Arduino_Read_String = dataValue;
-                    log.Debug("[" + sp + "] DataReceived: " + dataValue);
+                    GlobalData.log.Debug("[" + sp + "] DataReceived: " + dataValue);
 
                     int recByteCount = byteRead.Count();
                     if (recByteCount > 0)

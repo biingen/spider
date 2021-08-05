@@ -38,7 +38,6 @@ using System.ComponentModel;
 using Microsoft.VisualBasic.FileIO;
 using USB_VN1630A;
 using ModuleLayer;
-using log4net;
 using Universal_Toolkit;
 using Universal_Toolkit.Types;
 //using NationalInstruments.DAQmx;
@@ -55,7 +54,6 @@ namespace Woodpecker
         private string MainSettingPath = GlobalData.MainSettingPath;    //Application.StartupPath + "\\Config.ini";
         private string MailPath = GlobalData.MailSettingPath;                  //Application.StartupPath + "\\Mail.ini";
         private string RcPath = GlobalData.RcSettingPath;                         //Application.StartupPath + "\\RC.ini";
-        private static ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);        //log4net
 
         private Mod_RS232 serialPortA = new Mod_RS232();
         private Mod_RS232 serialPortB = new Mod_RS232();
@@ -1206,7 +1204,7 @@ namespace Woodpecker
 
         private void RedRatDBViewer_Delay(int delay_ms)
         {
-            log.Debug("RedRatDBViewer_Delay_S");
+            GlobalData.log.Debug("RedRatDBViewer_Delay_S");
             if (delay_ms <= 0) return;
             System.Timers.Timer aTimer = new System.Timers.Timer(delay_ms);
             //aTimer.Interval = delay_ms;
@@ -1343,14 +1341,14 @@ namespace Woodpecker
                 if (GlobalData.Break_Out_MyRunCamd == 1)//強制讓schedule直接停止//
                 {
                     GlobalData.Break_Out_MyRunCamd = 0;
-                    log.Debug("Break_Out_MyRunCamd_0");
+                    GlobalData.log.Debug("Break_Out_MyRunCamd_0");
                     break;
                 }
             }
 
             aTimer.Stop();
             aTimer.Dispose();
-            log.Debug("RedRatDBViewer_Delay_E");
+            GlobalData.log.Debug("RedRatDBViewer_Delay_E");
         }
 
         // 這個usbcan專用的delay的內部資料與function
@@ -3155,7 +3153,7 @@ namespace Woodpecker
                         DateTime dt = DateTime.Now;
                         dataValue = "[Receive_Port_Arduino] [" + dt.ToString("yyyy/MM/dd HH:mm:ss.fff") + "]  " + dataValue + "\r\n"; //OK
                     }
-                    log.Debug("Ardroud receive:" + dataValue);
+                    GlobalData.log.Debug("Ardroud receive:" + dataValue);
                     GlobalData.Arduino_recFlag = true;
                     logDumpping.LogCat(ref arduino_text, dataValue);
                     logDumpping.LogCat(ref logAll_text, dataValue);
@@ -5755,7 +5753,7 @@ namespace Woodpecker
                         DateTime.Now.ToShortTimeString();
                         DateTime sch_dt = DateTime.Now;
 
-                        log.Debug("Record Schedule");
+                        GlobalData.log.Debug("Record Schedule");
                         Schedule_log = columns_command;
                         try
                         {
@@ -6063,7 +6061,7 @@ namespace Woodpecker
                         #region -- 拍照 --
                         else if (columns_command == "_shot")
                         {
-                            log.Debug("Take Picture: _shot_start");
+                            GlobalData.log.Debug("Take Picture: _shot_start");
                             if (ini12.INIRead(MainSettingPath, "Device", "CameraExist", "") == "1")
                             {
                                 GlobalData.caption_Num++;
@@ -6078,14 +6076,14 @@ namespace Woodpecker
                                 MessageBox.Show("Camera is not connected!\r\nPlease go to Settings to reload the device list.", "Connection Error");
                                 //setStyle();
                             }
-                            log.Debug("Take Picture: _shot_stop");
+                            GlobalData.log.Debug("Take Picture: _shot_stop");
                         }
                         #endregion
 
                         #region -- 錄影 --
                         else if (columns_command == "_rec_start")
                         {
-                            log.Debug("Take Record: _rec_start");
+                            GlobalData.log.Debug("Take Record: _rec_start");
                             if (ini12.INIRead(MainSettingPath, "Device", "CameraExist", "") == "1")
                             {
                                 if (GlobalData.VideoRecording == false && columns_serial == "")
@@ -6111,7 +6109,7 @@ namespace Woodpecker
 
                         else if (columns_command == "_rec_stop")
                         {
-                            log.Debug("Take Record: _rec_stop");
+                            GlobalData.log.Debug("Take Record: _rec_stop");
                             if (ini12.INIRead(MainSettingPath, "Device", "CameraExist", "") == "1")
                             {
                                 if (GlobalData.VideoRecording == true)       //判斷是不是正在錄影
@@ -6219,7 +6217,7 @@ namespace Woodpecker
                             //if (ini12.INIRead(MainSettingPath, "Port A", "Checked", "") == "1" && columns_comport == "A")
 							if (GlobalData.portConfigGroup_A.checkedValue == true && columns_comport == "A")
                             {
-                                log.Debug("Ascii Log: _PortA");
+                                GlobalData.log.Debug("Ascii Log: _PortA");
                                 if (columns_serial == "_save")
                                 {
                                     Serialportsave("A"); //存檔rs232
@@ -6247,7 +6245,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_B.checkedValue == true && columns_comport == "B")
                             {
-                                log.Debug("Ascii Log: _PortB");
+                                GlobalData.log.Debug("Ascii Log: _PortB");
                                 if (columns_serial == "_save")
                                 {
                                     Serialportsave("B"); //存檔rs232
@@ -6275,7 +6273,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_C.checkedValue == true && columns_comport == "C")
                             {
-                                log.Debug("Ascii Log: _PortC");
+                                GlobalData.log.Debug("Ascii Log: _PortC");
                                 if (columns_serial == "_save")
                                 {
                                     Serialportsave("C"); //存檔rs232
@@ -6303,7 +6301,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_D.checkedValue == true && columns_comport == "D")
                             {
-                                log.Debug("Ascii Log: _PortD");
+                                GlobalData.log.Debug("Ascii Log: _PortD");
                                 if (columns_serial == "_save")
                                 {
                                     Serialportsave("D"); //存檔rs232
@@ -6331,7 +6329,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_E.checkedValue == true && columns_comport == "E")
                             {
-                                log.Debug("Ascii Log: _PortE");
+                                GlobalData.log.Debug("Ascii Log: _PortE");
                                 if (columns_serial == "_save")
                                 {
                                     Serialportsave("E"); //存檔rs232
@@ -6359,7 +6357,7 @@ namespace Woodpecker
 
                             if (columns_comport == "ALL")
                             {
-                                log.Debug("Ascii Log: _All");
+                                GlobalData.log.Debug("Ascii Log: _All");
                                 string[] serial_content = columns_serial.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
                                 string[] switch_content = columns_switch.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -6845,7 +6843,7 @@ namespace Woodpecker
                             //if (ini12.INIRead(MainSettingPath, "Port A", "Checked", "") == "1" && columns_comport == "A")
                             if (GlobalData.portConfigGroup_A.checkedValue == true && columns_comport == "A")
                             {
-                                log.Debug("Hex Log: _PortA");
+                                GlobalData.log.Debug("Hex Log: _PortA");
                                 if (columns_serial == "_save")
                                 {
                                     //Serialportsave("A"); //存檔rs232
@@ -6909,7 +6907,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_B.checkedValue == true && columns_comport == "B")
                             {
-                                log.Debug("Hex Log: _PortB");
+                                GlobalData.log.Debug("Hex Log: _PortB");
                                 if (columns_serial == "_save")
                                 {
                                     //Serialportsave("B"); //存檔rs232
@@ -6967,7 +6965,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_C.checkedValue == true && columns_comport == "C")
                             {
-                                log.Debug("Hex Log: _PortC");
+                                GlobalData.log.Debug("Hex Log: _PortC");
                                 if (columns_serial == "_save")
                                 {
                                     //Serialportsave("C"); //存檔rs232
@@ -7026,7 +7024,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_D.checkedValue == true && columns_comport == "D")
                             {
-                                log.Debug("Hex Log: _PortD");
+                                GlobalData.log.Debug("Hex Log: _PortD");
                                 if (columns_serial == "_save")
                                 {
                                     //Serialportsave("D"); //存檔rs232
@@ -7085,7 +7083,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_E.checkedValue == true && columns_comport == "E")
                             {
-                                log.Debug("Hex Log: _PortE");
+                                GlobalData.log.Debug("Hex Log: _PortE");
                                 if (columns_serial == "_save")
                                 {
                                     //Serialportsave("E"); //存檔rs232
@@ -7144,7 +7142,7 @@ namespace Woodpecker
 
                             if (columns_comport == "ALL")
                             {
-                                log.Debug("Hex Log: _All");
+                                GlobalData.log.Debug("Hex Log: _All");
                                 string[] serial_content = columns_serial.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
 
                                 if (columns_serial == "_save")
@@ -7358,14 +7356,14 @@ namespace Woodpecker
                             {
                                 if (columns_function == "GetDUTSensor")
                                 {
-                                    log.Debug("DUT sensor control: DUT sensor start");
+                                    GlobalData.log.Debug("DUT sensor control: DUT sensor start");
                                     string dataValue = "";
                                     dataValue = rk2797.GetDUTSensor(columns_remark);
 
                                     logDumpping.LogCat(ref minolta_csv_report, dataValue);
                                     logDumpping.LogCat(ref minolta_text, dataValue);
                                     logDumpping.LogCat(ref logAll_text, dataValue);
-                                    log.Debug("DUT sensor control: DUT sensor end");
+                                    GlobalData.log.Debug("DUT sensor control: DUT sensor end");
                                 }
                                 else if (columns_serial == "_save")
                                 {
@@ -7380,13 +7378,14 @@ namespace Woodpecker
                             {
                                 if (CA210.Status() == true)
                                 {
+                                    GlobalData.log.Debug("CA210 status: Connect!");
                                     if (columns_function == "Measure")
                                     {
                                         int mtimes = 0, mRepeat = 0;
                                         string dataValue = "";
                                         Stopwatch sw = new Stopwatch();
                                         sw.Start();
-                                        log.Debug("CA210 control: Measure start");
+                                        GlobalData.log.Debug("CA210 control: Measure start");
                                         if (columns_times != "" && int.TryParse(columns_times, out mtimes) == true && columns_interval != "" && int.TryParse(columns_interval, out mRepeat) == true)
                                         {
                                             mtimes = int.Parse(columns_times); // 量測次數
@@ -7400,14 +7399,14 @@ namespace Woodpecker
                                         logDumpping.LogCat(ref minolta_text, dataValue);
                                         logDumpping.LogCat(ref logAll_text, dataValue);
                                         sw.Stop();
-                                        log.Debug($"Minolta Measure: { sw.ElapsedMilliseconds}ms");
-                                        log.Debug("CA210 control: Measure stop");
+                                        GlobalData.log.Debug($"Minolta Measure: { sw.ElapsedMilliseconds}ms");
+                                        GlobalData.log.Debug("CA210 control: Measure stop");
                                     }
                                     else if (columns_function == "DisplayMode")
                                     {
                                         Stopwatch sw = new Stopwatch();
                                         sw.Start();
-                                        log.Debug("CA210 control: DisplayMode start");
+                                        GlobalData.log.Debug("CA210 control: DisplayMode start");
                                         if (columns_times != "" && int.TryParse(columns_times, out stime) == true)
                                             stime = int.Parse(columns_times); // 模式切換
                                         else
@@ -7415,18 +7414,18 @@ namespace Woodpecker
 
                                         CA210.DisplayMode(stime);
                                         sw.Stop();
-                                        log.Debug($"Minolta DisplayMode: { sw.ElapsedMilliseconds}ms");
-                                        log.Debug("CA210 control: DisplayMode end");
+                                        GlobalData.log.Debug($"Minolta DisplayMode: { sw.ElapsedMilliseconds}ms");
+                                        GlobalData.log.Debug("CA210 control: DisplayMode end");
                                     }
                                     else if (columns_function == "CalZero")
                                     {
                                         Stopwatch sw = new Stopwatch();
                                         sw.Start();
-                                        log.Debug("CA210 control: Zero-calibrates the device start");
+                                        GlobalData.log.Debug("CA210 control: Zero-calibrates the device start");
                                         CA210.CalZero();
                                         sw.Stop();
-                                        log.Debug($"Minolta CalZero: { sw.ElapsedMilliseconds}ms");
-                                        log.Debug("CA210 control: Zero-calibrates the device end");
+                                        GlobalData.log.Debug($"Minolta CalZero: { sw.ElapsedMilliseconds}ms");
+                                        GlobalData.log.Debug("CA210 control: Zero-calibrates the device end");
                                     }
 
                                     if (columns_serial == "_save")
@@ -7440,7 +7439,8 @@ namespace Woodpecker
                                 }
                                 else if (CA210.Status() == false)
                                 {
-                                    MessageBox.Show("Minolta is not connected!\r\nPlease restart the OPTT to reload the device.", "Connection Error");
+                                    GlobalData.log.Debug("CA210 status: Disconnect!");
+                                    MessageBox.Show("Minolta is not connected!\r\nPlease restart the Woodpecker to reload the device.", "Connection Error");
                                 }
                             }
                         }
@@ -7449,7 +7449,7 @@ namespace Woodpecker
                         #region -- K-Line --
                         else if (columns_command == "_K_ABS")
                         {
-                            log.Debug("K-line control: _K_ABS");
+                            GlobalData.log.Debug("K-line control: _K_ABS");
                             try
                             {
                                 // K-lite ABS指令檔案匯入
@@ -7489,7 +7489,7 @@ namespace Woodpecker
                         }
                         else if (columns_command == "_K_OBD")
                         {
-                            log.Debug("K-line control: _K_OBD");
+                            GlobalData.log.Debug("K-line control: _K_OBD");
                             try
                             {
                                 // K-lite OBD指令檔案匯入
@@ -7544,7 +7544,7 @@ namespace Woodpecker
                         {
                             if (GlobalData.portConfigGroup_A.checkedValue == true && columns_comport == "A")
                             {
-                                log.Debug("I2C Read Log: _TX_I2C_Read_PortA");
+                                GlobalData.log.Debug("I2C Read Log: _TX_I2C_Read_PortA");
                                 if (columns_times != "" && columns_function != "")
                                 {
                                     string orginal_data = columns_times + " " + columns_function + " " + "20";
@@ -7562,7 +7562,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_B.checkedValue == true && columns_comport == "B")
                             {
-                                log.Debug("I2C Read Log: _TX_I2C_Read_PortB");
+                                GlobalData.log.Debug("I2C Read Log: _TX_I2C_Read_PortB");
                                 if (columns_times != "" && columns_function != "")
                                 {
                                     string orginal_data = columns_times + " " + columns_function + " " + "20";
@@ -7580,7 +7580,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_C.checkedValue == true && columns_comport == "C")
                             {
-                                log.Debug("I2C Read Log: _TX_I2C_Read_PortC");
+                                GlobalData.log.Debug("I2C Read Log: _TX_I2C_Read_PortC");
                                 if (columns_times != "" && columns_function != "")
                                 {
                                     string orginal_data = columns_times + " " + columns_function + " " + "20";
@@ -7598,7 +7598,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_D.checkedValue == true && columns_comport == "D")
                             {
-                                log.Debug("I2C Read Log: _TX_I2C_Read_PortD");
+                                GlobalData.log.Debug("I2C Read Log: _TX_I2C_Read_PortD");
                                 if (columns_times != "" && columns_function != "")
                                 {
                                     string orginal_data = columns_times + " " + columns_function + " " + "20";
@@ -7616,7 +7616,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_E.checkedValue == true && columns_comport == "E")
                             {
-                                log.Debug("I2C Read Log: _TX_I2C_Read_PortE");
+                                GlobalData.log.Debug("I2C Read Log: _TX_I2C_Read_PortE");
                                 if (columns_times != "" && columns_function != "")
                                 {
                                     string orginal_data = columns_times + " " + columns_function + " " + "20";
@@ -7639,7 +7639,7 @@ namespace Woodpecker
                         {
                             if (GlobalData.portConfigGroup_A.checkedValue == true && columns_comport == "A")
                             {
-                                log.Debug("I2C Write Log: _TX_I2C_Write_PortA");
+                                GlobalData.log.Debug("I2C Write Log: _TX_I2C_Write_PortA");
                                 if (columns_function != "" && columns_subFunction != "")
                                 {
                                     int Data_length = columns_subFunction.Split(' ').Count();
@@ -7658,7 +7658,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_B.checkedValue == true && columns_comport == "B")
                             {
-                                log.Debug("I2C Write Log: _TX_I2C_Write_PortB");
+                                GlobalData.log.Debug("I2C Write Log: _TX_I2C_Write_PortB");
                                 if (columns_function != "" && columns_subFunction != "")
                                 {
                                     int Data_length = columns_subFunction.Split(' ').Count();
@@ -7677,7 +7677,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_C.checkedValue == true && columns_comport == "C")
                             {
-                                log.Debug("I2C Write Log: _TX_I2C_Write_PortC");
+                                GlobalData.log.Debug("I2C Write Log: _TX_I2C_Write_PortC");
                                 if (columns_function != "" && columns_subFunction != "")
                                 {
                                     int Data_length = columns_subFunction.Split(' ').Count();
@@ -7696,7 +7696,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_D.checkedValue == true && columns_comport == "D")
                             {
-                                log.Debug("I2C Write Log: _TX_I2C_Write_PortD");
+                                GlobalData.log.Debug("I2C Write Log: _TX_I2C_Write_PortD");
                                 if (columns_function != "" && columns_subFunction != "")
                                 {
                                     int Data_length = columns_subFunction.Split(' ').Count();
@@ -7715,7 +7715,7 @@ namespace Woodpecker
 
                             if (GlobalData.portConfigGroup_E.checkedValue == true && columns_comport == "E")
                             {
-                                log.Debug("I2C Write Log: _TX_I2C_Write_PortE");
+                                GlobalData.log.Debug("I2C Write Log: _TX_I2C_Write_PortE");
                                 if (columns_function != "" && columns_subFunction != "")
                                 {
                                     int Data_length = columns_subFunction.Split(' ').Count();
@@ -7739,7 +7739,7 @@ namespace Woodpecker
                         {
                             if (portinfo.ftStatus == FtResult.Ok)
                             {
-                                log.Debug("FTDI Write Log: _FTDI_Read_Write");
+                                GlobalData.log.Debug("FTDI Write Log: _FTDI_Read_Write");
                                 Algorithm algorithm = new Algorithm();
                                 string Outputstring = "";
                                 if (columns_serial == "_save")
@@ -7824,7 +7824,7 @@ namespace Woodpecker
                             {
                                 if (columns_times != "" && columns_interval == "" && columns_serial != "")
                                 {
-                                    log.Debug("Canbus Send (Event): _Canbus_Send");
+                                    GlobalData.log.Debug("Canbus Send (Event): _Canbus_Send");
                                     byte[] Outputdata = new byte[columns_serial.Split(' ').Count()];
                                     Outputdata = HexConverter.StrToByte(columns_serial);
                                     Can_Usb2C.TransmitData(Convert.ToUInt32(columns_times), Outputdata);
@@ -7874,7 +7874,7 @@ namespace Woodpecker
                             {
                                 if (columns_times != "" && columns_interval == "" && columns_serial != "")
                                 {
-                                    log.Debug("Canbus Send: Vector_Canbus_once");
+                                    GlobalData.log.Debug("Canbus Send: Vector_Canbus_once");
                                     byte[] Outputdata = new byte[columns_serial.Split(' ').Count()];
                                     Outputdata = HexConverter.StrToByte(columns_serial);
                                     Can_1630A.LoopCANTransmit(Convert.ToUInt32(columns_times), Convert.ToUInt32(columns_interval), Outputdata);
@@ -7888,7 +7888,7 @@ namespace Woodpecker
                                 }
                                 else if (columns_times != "" && columns_interval != "" && columns_serial != "")
                                 {
-                                    log.Debug("Canbus Send: Vector_Canbus_loop");
+                                    GlobalData.log.Debug("Canbus Send: Vector_Canbus_loop");
                                     set_timer_rate = true;
                                     can_id = System.Convert.ToUInt16("0x" + columns_times, 16);
                                     byte[] Outputdata = new byte[columns_serial.Split(' ').Count()];
@@ -7937,19 +7937,19 @@ namespace Woodpecker
                             {
                                 if (columns_times != "" && columns_interval != "" && columns_serial != "")
                                 {
-                                    log.Debug("Canbus Write: UsbCAN_Canbus_Queue_data");
+                                    GlobalData.log.Debug("Canbus Write: UsbCAN_Canbus_Queue_data");
                                     byte[] Outputbytes = new byte[columns_serial.Split(' ').Count()];
                                     Outputbytes = HexConverter.StrToByte(columns_serial);
                                     can_data_list.Add(new USB_CAN2C.CAN_Data(System.Convert.ToUInt16("0x" + columns_times, 16), System.Convert.ToUInt32(columns_interval), Outputbytes, Convert.ToByte(columns_serial.Split(' ').Count())));
                                 }
                                 else if (columns_function == "send")
                                 {
-                                    log.Debug("Canbus Write: UsbCAN_Canbus_Queue_send");
+                                    GlobalData.log.Debug("Canbus Write: UsbCAN_Canbus_Queue_send");
                                     can_send = 1;
                                 }
                                 else if (columns_function == "clear")
                                 {
-                                    log.Debug("Canbus Write: UsbCAN_Canbus_Queue_clean");
+                                    GlobalData.log.Debug("Canbus Write: UsbCAN_Canbus_Queue_clean");
                                     can_send = 0;
                                     can_data_list.Clear();
                                 }
@@ -7958,19 +7958,19 @@ namespace Woodpecker
                             {
                                 if (columns_times != "" && columns_interval != "" && columns_serial != "")
                                 {
-                                    log.Debug("Canbus Write: Vector_Canbus_Queue_data");
+                                    GlobalData.log.Debug("Canbus Write: Vector_Canbus_Queue_data");
                                     byte[] Outputbytes = new byte[columns_serial.Split(' ').Count()];
                                     Outputbytes = HexConverter.StrToByte(columns_serial);
                                     can_data_list.Add(new USB_CAN2C.CAN_Data(System.Convert.ToUInt16("0x" + columns_times, 16), System.Convert.ToUInt32(columns_interval), Outputbytes, Convert.ToByte(columns_serial.Split(' ').Count())));
                                 }
                                 else if (columns_function == "send")
                                 {
-                                    log.Debug("Canbus Write: Vector_Canbus_Queue_send");
+                                    GlobalData.log.Debug("Canbus Write: Vector_Canbus_Queue_send");
                                     can_send = 1;
                                 }
                                 else if (columns_function == "clear")
                                 {
-                                    log.Debug("Canbus Write: Vector_Canbus_Queue_clean");
+                                    GlobalData.log.Debug("Canbus Write: Vector_Canbus_Queue_clean");
                                     can_send = 0;
                                     can_data_list.Clear();
                                 }
@@ -7982,7 +7982,7 @@ namespace Woodpecker
                         #region -- Astro Timing --
                         else if (columns_command == "_astro")
                         {
-                            log.Debug("Astro control: _astro");
+                            GlobalData.log.Debug("Astro control: _astro");
                             try
                             {
                                 // Astro指令
@@ -8034,7 +8034,7 @@ namespace Woodpecker
                         #region -- Quantum Timing --
                         else if (columns_command == "_quantum")
                         {
-                            log.Debug("Quantum control: _quantum");
+                            GlobalData.log.Debug("Quantum control: _quantum");
                             try
                             {
                                 // Quantum指令檔案匯入
@@ -8125,7 +8125,7 @@ namespace Woodpecker
                         {
                             if (columns_switch == "_start")
                             {
-                                log.Debug("Dektec control: _start");
+                                GlobalData.log.Debug("Dektec control: _start");
                                 string StreamName = columns_serial;
                                 string TvSystem = columns_function;
                                 string Freq = columns_subFunction;
@@ -8151,7 +8151,7 @@ namespace Woodpecker
 
                             if (columns_switch == "_stop")
                             {
-                                log.Debug("Dektec control: _stop");
+                                GlobalData.log.Debug("Dektec control: _stop");
                                 CloseDtplay();
                             }
                         }
@@ -8160,7 +8160,7 @@ namespace Woodpecker
                         #region -- 命令提示 --
                         else if (columns_command == "_DOS")
                         {
-                            log.Debug("DOS command: _DOS");
+                            GlobalData.log.Debug("DOS command: _DOS");
                             if (columns_serial != "")
                             {
                                 string Command = columns_serial;
@@ -8196,13 +8196,13 @@ namespace Woodpecker
                         #region -- GPIO_INPUT_OUTPUT --
                         else if (columns_command == "_IO_Input")
                         {
-                            log.Debug("GPIO control: _IO_Input");
+                            GlobalData.log.Debug("GPIO control: _IO_Input");
                             IO_INPUT();
                         }
 
                         else if (columns_command == "_IO_Output")
                         {
-                            log.Debug("GPIO control: _IO_Output");
+                            GlobalData.log.Debug("GPIO control: _IO_Output");
                             //string GPIO = "01010101";
                             string GPIO = columns_times;
                             byte GPIO_B = Convert.ToByte(GPIO, 2);
@@ -8212,14 +8212,14 @@ namespace Woodpecker
 
                         else if (columns_command == "_Arduino_Input")
                         {
-                            log.Debug("GPIO control: _Arduino_Input");
+                            GlobalData.log.Debug("GPIO control: _Arduino_Input");
                             GlobalData.Arduino_outputFlag = false;
                             Arduino_IO_INPUT(SysDelay);
                         }
 
                         else if (columns_command == "_Arduino_Output")
                         {
-                            log.Debug("GPIO control: _Arduino_Output");
+                            GlobalData.log.Debug("GPIO control: _Arduino_Output");
                             //string GPIO = "01010101";
                             string GPIO = columns_times;
                             byte GPIO_B = Convert.ToByte(GPIO, 2);
@@ -8229,7 +8229,7 @@ namespace Woodpecker
 
                         else if (columns_command == "_Arduino_Command")
                         {
-                            log.Debug("GPIO control: _Arduino_Command");
+                            GlobalData.log.Debug("GPIO control: _Arduino_Command");
                             if (columns_serial != "")
                             {
                                 GlobalData.Arduino_outputFlag = true;
@@ -8245,7 +8245,7 @@ namespace Woodpecker
                         #region -- Extend_GPIO_OUTPUT --
                         else if (columns_command == "_WaterTemp")
                         {
-                            log.Debug("Extend GPIO control: _WaterTemp");
+                            GlobalData.log.Debug("Extend GPIO control: _WaterTemp");
                             string GPIO = columns_times; // GPIO = "010101010";
                             if (GPIO.Length == 9)
                             {
@@ -8264,7 +8264,7 @@ namespace Woodpecker
 
                         else if (columns_command == "_FuelDisplay")
                         {
-                            log.Debug("Extend GPIO control: _FuelDisplay");
+                            GlobalData.log.Debug("Extend GPIO control: _FuelDisplay");
                             string GPIO = columns_times;
                             if (GPIO.Length == 9)
                             {
@@ -8283,7 +8283,7 @@ namespace Woodpecker
 
                         else if (columns_command == "_Temperature")
                         {
-                            log.Debug("Extend GPIO control: _Temperature");
+                            GlobalData.log.Debug("Extend GPIO control: _Temperature");
                             //string GPIO = "01010101";
                             string GPIO = columns_serial;
                             int GPIO_B = int.Parse(GPIO);
@@ -8332,7 +8332,7 @@ namespace Woodpecker
                             {
                                 for (int k = 0; k < stime; k++)
                                 {
-                                    log.Debug("Extend GPIO control: _FuncKey:" + k + " times");
+                                    GlobalData.log.Debug("Extend GPIO control: _FuncKey:" + k + " times");
                                     label_Command.Text = "(Push CMD)" + columns_serial;
                                     if (GlobalData.portConfigGroup_A.checkedValue == true && columns_comport == "A")
                                     {
@@ -8456,7 +8456,7 @@ namespace Woodpecker
                                         logDumpping.LogCat(logAll_text, dataValue);
                                     }
                                     //label_Command.Text = "(" + columns_command + ") " + columns_serial;
-                                    log.Debug("Extend GPIO control: _FuncKey Delay:" + sRepeat + " ms");
+                                    GlobalData.log.Debug("Extend GPIO control: _FuncKey Delay:" + sRepeat + " ms");
 
                                     RedRatDBViewer_Delay(sRepeat);
                                     int length = columns_serial.Length;
@@ -8603,7 +8603,7 @@ namespace Woodpecker
                         #region -- MonkeyTest --
                         else if (columns_command == "_MonkeyTest")
                         {
-                            log.Debug("Android control: _MonkeyTest");
+                            GlobalData.log.Debug("Android control: _MonkeyTest");
                             Add_ons MonkeyTest = new Add_ons();
                             MonkeyTest.MonkeyTest();
                             MonkeyTest.CreateExcelFile();
@@ -8667,7 +8667,7 @@ namespace Woodpecker
                                 {
                                     #region -- PA10 --
                                     case "10":
-                                        log.Debug("IO CMD: PA10");
+                                        GlobalData.log.Debug("IO CMD: PA10");
                                         if (columns_comport.Substring(6, 1) == "0" &&
                                             GlobalData.IO_INPUT.Substring(10, 1) == "0")
                                         {
@@ -8703,7 +8703,7 @@ namespace Woodpecker
 
                                     #region -- PA11 --
                                     case "11":
-                                        log.Debug("IO CMD: PA11");
+                                        GlobalData.log.Debug("IO CMD: PA11");
                                         if (columns_comport.Substring(6, 1) == "0" &&
                                             GlobalData.IO_INPUT.Substring(8, 1) == "0")
                                         {
@@ -8735,7 +8735,7 @@ namespace Woodpecker
 
                                     #region -- PA14 --
                                     case "14":
-                                        log.Debug("IO CMD: PA14");
+                                        GlobalData.log.Debug("IO CMD: PA14");
                                         if (columns_comport.Substring(6, 1) == "0" &&
                                             GlobalData.IO_INPUT.Substring(6, 1) == "0")
                                         {
@@ -8767,7 +8767,7 @@ namespace Woodpecker
 
                                     #region -- PA15 --
                                     case "15":
-                                        log.Debug("IO CMD: PA15");
+                                        GlobalData.log.Debug("IO CMD: PA15");
                                         if (columns_comport.Substring(6, 1) == "0" &&
                                             GlobalData.IO_INPUT.Substring(4, 1) == "0")
                                         {
@@ -8799,7 +8799,7 @@ namespace Woodpecker
 
                                     #region -- PB01 --
                                     case "01":
-                                        log.Debug("IO CMD: PB01");
+                                        GlobalData.log.Debug("IO CMD: PB01");
                                         if (columns_comport.Substring(6, 1) == "0" &&
                                             GlobalData.IO_INPUT.Substring(2, 1) == "0")
                                         {
@@ -8832,7 +8832,7 @@ namespace Woodpecker
 
                                     #region -- PB07 --
                                     case "07":
-                                        log.Debug("IO CMD: PB07");
+                                        GlobalData.log.Debug("IO CMD: PB07");
                                         if (columns_comport.Substring(6, 1) == "0" &&
                                             GlobalData.IO_INPUT.Substring(0, 1) == "0")
                                         {
@@ -8879,7 +8879,7 @@ namespace Woodpecker
                                 {
                                     #region -- P02 --
                                     case "2":
-                                        log.Debug("Arduino IO CMD: P02");
+                                        GlobalData.log.Debug("Arduino IO CMD: P02");
                                         if (columns_comport.Substring(5, 1) == "0" &&
                                             GlobalData.Arduino_IO_INPUT_value < 0x100 &&
                                             Convert.ToByte(GlobalData.Arduino_IO_INPUT_value & 0x01) == 0x00)
@@ -8938,7 +8938,7 @@ namespace Woodpecker
 
                                     #region -- P03 --
                                     case "3":
-                                        log.Debug("Arduino IO CMD: P03");
+                                        GlobalData.log.Debug("Arduino IO CMD: P03");
                                         if (columns_comport.Substring(5, 1) == "0" &&
                                             GlobalData.Arduino_IO_INPUT_value < 0x100 &&
                                             Convert.ToByte(GlobalData.Arduino_IO_INPUT_value & 0x02) == 0x00)
@@ -8976,7 +8976,7 @@ namespace Woodpecker
 
                                     #region -- P04 --
                                     case "4":
-                                        log.Debug("Arduino IO CMD: P04");
+                                        GlobalData.log.Debug("Arduino IO CMD: P04");
                                         if (columns_comport.Substring(5, 1) == "0" &&
                                             GlobalData.Arduino_IO_INPUT_value < 0x100 &&
                                             Convert.ToByte(GlobalData.Arduino_IO_INPUT_value & 0x04) == 0x00)
@@ -9014,7 +9014,7 @@ namespace Woodpecker
 
                                     #region -- P05 --
                                     case "5":
-                                        log.Debug("Arduino IO CMD: P05");
+                                        GlobalData.log.Debug("Arduino IO CMD: P05");
                                         if (columns_comport.Substring(5, 1) == "0" &&
                                             GlobalData.Arduino_IO_INPUT_value < 0x100 &&
                                             Convert.ToByte(GlobalData.Arduino_IO_INPUT_value & 0x08) == 0x00)
@@ -9052,7 +9052,7 @@ namespace Woodpecker
 
                                     #region -- P06 --
                                     case "6":
-                                        log.Debug("Arduino IO CMD: P06");
+                                        GlobalData.log.Debug("Arduino IO CMD: P06");
                                         if (columns_comport.Substring(5, 1) == "0" &&
                                             GlobalData.Arduino_IO_INPUT_value < 0x100 &&
                                             Convert.ToByte(GlobalData.Arduino_IO_INPUT_value & 0x10) == 0x00)
@@ -9090,7 +9090,7 @@ namespace Woodpecker
 
                                     #region -- P07 --
                                     case "7":
-                                        log.Debug("Arduino IO CMD: P07");
+                                        GlobalData.log.Debug("Arduino IO CMD: P07");
                                         if (columns_comport.Substring(5, 1) == "0" &&
                                             GlobalData.Arduino_IO_INPUT_value < 0x100 &&
                                             Convert.ToByte(GlobalData.Arduino_IO_INPUT_value & 0x20) == 0x00)
@@ -9128,7 +9128,7 @@ namespace Woodpecker
 
                                     #region -- P08 --
                                     case "8":
-                                        log.Debug("Arduino IO CMD: P08");
+                                        GlobalData.log.Debug("Arduino IO CMD: P08");
                                         if (columns_comport.Substring(5, 1) == "0" &&
                                             GlobalData.Arduino_IO_INPUT_value < 0x100 &&
                                             Convert.ToByte(GlobalData.Arduino_IO_INPUT_value & 0x40) == 0x00)
@@ -9166,7 +9166,7 @@ namespace Woodpecker
 
                                     #region -- P09 --
                                     case "9":
-                                        log.Debug("Arduino IO CMD: P09");
+                                        GlobalData.log.Debug("Arduino IO CMD: P09");
                                         if (columns_comport.Substring(5, 1) == "0" &&
                                             GlobalData.Arduino_IO_INPUT_value < 0x100 &&
                                             Convert.ToByte(GlobalData.Arduino_IO_INPUT_value & 0x80) == 0x00)
@@ -9350,7 +9350,7 @@ namespace Woodpecker
                         #region -- Audio Debounce --
                         else if (columns_command == "_audio_debounce")
                         {
-                            log.Debug("Audio Detect: _audio_debounce");
+                            GlobalData.log.Debug("Audio Detect: _audio_debounce");
                             bool Debounce_Time_PB1, Debounce_Time_PB7;
                             if (columns_interval != "")
                             {
@@ -9375,7 +9375,7 @@ namespace Woodpecker
                             switch (columns_times)
                             {
                                 case "1":
-                                    log.Debug("Keyword Search: 1");
+                                    GlobalData.log.Debug("Keyword Search: 1");
                                     if (GlobalData.keyword_1 == "true")
                                     {
                                         KeywordCommand();
@@ -9388,7 +9388,7 @@ namespace Woodpecker
                                     break;
 
                                 case "2":
-                                    log.Debug("Keyword Search: 2");
+                                    GlobalData.log.Debug("Keyword Search: 2");
                                     if (GlobalData.keyword_2 == "true")
                                     {
                                         KeywordCommand();
@@ -9401,7 +9401,7 @@ namespace Woodpecker
                                     break;
 
                                 case "3":
-                                    log.Debug("Keyword Search: 3");
+                                    GlobalData.log.Debug("Keyword Search: 3");
                                     if (GlobalData.keyword_3 == "true")
                                     {
                                         KeywordCommand();
@@ -9414,7 +9414,7 @@ namespace Woodpecker
                                     break;
 
                                 case "4":
-                                    log.Debug("Keyword Search: 4");
+                                    GlobalData.log.Debug("Keyword Search: 4");
                                     if (GlobalData.keyword_4 == "true")
                                     {
                                         KeywordCommand();
@@ -9427,7 +9427,7 @@ namespace Woodpecker
                                     break;
 
                                 case "5":
-                                    log.Debug("Keyword Search: 5");
+                                    GlobalData.log.Debug("Keyword Search: 5");
                                     if (GlobalData.keyword_5 == "true")
                                     {
                                         KeywordCommand();
@@ -9440,7 +9440,7 @@ namespace Woodpecker
                                     break;
 
                                 case "6":
-                                    log.Debug("Keyword Search: 6");
+                                    GlobalData.log.Debug("Keyword Search: 6");
                                     if (GlobalData.keyword_6 == "true")
                                     {
                                         KeywordCommand();
@@ -9453,7 +9453,7 @@ namespace Woodpecker
                                     break;
 
                                 case "7":
-                                    log.Debug("Keyword Search: 7");
+                                    GlobalData.log.Debug("Keyword Search: 7");
                                     if (GlobalData.keyword_7 == "true")
                                     {
                                         KeywordCommand();
@@ -9466,7 +9466,7 @@ namespace Woodpecker
                                     break;
 
                                 case "8":
-                                    log.Debug("Keyword Search: 8");
+                                    GlobalData.log.Debug("Keyword Search: 8");
                                     if (GlobalData.keyword_8 == "true")
                                     {
                                         KeywordCommand();
@@ -9479,7 +9479,7 @@ namespace Woodpecker
                                     break;
 
                                 case "9":
-                                    log.Debug("Keyword Search: 9");
+                                    GlobalData.log.Debug("Keyword Search: 9");
                                     if (GlobalData.keyword_9 == "true")
                                     {
                                         KeywordCommand();
@@ -9492,7 +9492,7 @@ namespace Woodpecker
                                     break;
 
                                 default:
-                                    log.Debug("Keyword Search: 10");
+                                    GlobalData.log.Debug("Keyword Search: 10");
                                     if (columns_times == "10")
                                     {
                                         if (GlobalData.keyword_10 == "true")
@@ -9505,7 +9505,7 @@ namespace Woodpecker
                                         }
                                         GlobalData.keyword_10 = "false";
                                     }
-                                    log.Debug("keyword not found_schedule");
+                                    GlobalData.log.Debug("keyword not found_schedule");
                                     break;
 
                             }
@@ -9515,7 +9515,7 @@ namespace Woodpecker
                         #region -- PWM1 --
                         else if (columns_command == "_pwm1")
                         {
-                            log.Debug("PWM Control: _pwm1");
+                            GlobalData.log.Debug("PWM Control: _pwm1");
                             if (ini12.INIRead(MainSettingPath, "Port A", "Checked", "") == "1")
                             {
                                 string pwm_output;
@@ -9550,7 +9550,7 @@ namespace Woodpecker
                         #region -- PWM2 --
                         else if (columns_command == "_pwm2")
                         {
-                            log.Debug("PWM Control: _pwm2");
+                            GlobalData.log.Debug("PWM Control: _pwm2");
                             if (ini12.INIRead(MainSettingPath, "Port B", "Checked", "") == "1")
                             {
                                 string pwm_output;
@@ -9585,7 +9585,7 @@ namespace Woodpecker
                         #region -- PWM3 --
                         else if (columns_command == "_pwm3")
                         {
-                            log.Debug("PWM Control: _pwm3");
+                            GlobalData.log.Debug("PWM Control: _pwm3");
                             if (ini12.INIRead(MainSettingPath, "Port C", "Checked", "") == "1")
                             {
                                 string pwm_output;
@@ -9622,7 +9622,7 @@ namespace Woodpecker
                         {
                             try
                             {
-                                log.Debug("Remote Control: TV_rc_key");
+                                GlobalData.log.Debug("Remote Control: TV_rc_key");
                                 for (int k = 0; k < stime; k++)
                                 {
                                     label_Command.Text = columns_command;
@@ -9666,13 +9666,13 @@ namespace Woodpecker
 
                         //Thread MyExportText = new Thread(new ThreadStart(MyExportCamd));
                         //MyExportText.Start();
-                        log.Debug("CloseTime record.");
+                        GlobalData.log.Debug("CloseTime record.");
                         ini12.INIWrite(MailPath, "Data Info", "CloseTime", string.Format("{0:R}", DateTime.Now));
 
 
                         if (GlobalData.Break_Out_Schedule == 1)//定時器時間到跳出迴圈//
                         {
-                            log.Debug("Break schedule.");
+                            GlobalData.log.Debug("Break schedule.");
                             j = GlobalData.Schedule_Loop;
                             UpdateUI(j.ToString(), label_LoopNumber_Value);
                             GlobalData.label_LoopNumber = j.ToString();
@@ -9680,14 +9680,14 @@ namespace Woodpecker
                         }
 
                         Nowpoint = DataGridView_Schedule.Rows[GlobalData.Scheduler_Row].Index;
-                        log.Debug("Nowpoint record: " + Nowpoint);
+                        GlobalData.log.Debug("Nowpoint record: " + Nowpoint);
 
                         if (Breakfunction == true)
                         {
-                            log.Debug("Breakfunction.");
+                            GlobalData.log.Debug("Breakfunction.");
                             if (Breakpoint == Nowpoint)
                             {
-                                log.Debug("Breakpoint = Nowpoint");
+                                GlobalData.log.Debug("Breakpoint = Nowpoint");
                                 button_Pause.PerformClick();
                             }
                         }
@@ -9696,12 +9696,12 @@ namespace Woodpecker
                         {
                             timer_countdown.Stop();
                             SchedulePause.WaitOne();
-                            log.Debug("SchedulePause_WaitOne");
+                            GlobalData.log.Debug("SchedulePause_WaitOne");
                         }
                         else
                         {
                             RedRatDBViewer_Delay(SysDelay);
-                            log.Debug("RedRatDBViewer_Delay: " + SysDelay);
+                            GlobalData.log.Debug("RedRatDBViewer_Delay: " + SysDelay);
                         }
 
                         #region -- 足跡模式 --
@@ -9709,7 +9709,7 @@ namespace Woodpecker
                         if (ini12.INIRead(MainSettingPath, "Record", "Footprint Mode", "") == "1" && SysDelay != 0)
                         {
                             string fName = ini12.INIRead(GlobalData.MainSettingPath, "Record", "LogPath", "");
-                            log.Debug("IO Input Footprint Mode Start");
+                            GlobalData.log.Debug("IO Input Footprint Mode Start");
                             //檔案不存在則加入標題
                             if (File.Exists(fName + @"\StepRecord.csv") == false && ini12.INIRead(MainSettingPath, "Device", "AutoboxExist", "") == "1")
                             {
@@ -9742,9 +9742,9 @@ namespace Woodpecker
                                 "," + GlobalData.IO_PB1_0_COUNT + "," + GlobalData.IO_PB1_1_COUNT +
                                 "," + GlobalData.IO_PB7_0_COUNT + "," + GlobalData.IO_PB7_1_COUNT + Environment.NewLine);
                             }
-                            log.Debug("IO Input Footprint Mode Stop");
+                            GlobalData.log.Debug("IO Input Footprint Mode Stop");
 
-                            log.Debug("Arduino IO Input Footprint Mode Start");
+                            GlobalData.log.Debug("Arduino IO Input Footprint Mode Start");
                             //檔案不存在則加入標題
                             if (File.Exists(fName + @"\Arduino_StepRecord.csv") == false && GlobalData.m_Arduino_Port.IsOpen() == true)
                             {
@@ -9783,10 +9783,10 @@ namespace Woodpecker
                                 GlobalData.IO_Arduino3_0_COUNT + "," + GlobalData.IO_Arduino3_1_COUNT + "," +
                                 GlobalData.IO_Arduino2_0_COUNT + "," + GlobalData.IO_Arduino2_1_COUNT + "," + Environment.NewLine);
                             }
-                            log.Debug("Arduino IO Input Footprint Mode Stop");
+                            GlobalData.log.Debug("Arduino IO Input Footprint Mode Stop");
                         }
                         #endregion
-                        log.Debug("End.");
+                        GlobalData.log.Debug("End.");
                     }
 
                     #region -- Import database --
@@ -9826,7 +9826,7 @@ namespace Woodpecker
                     #endregion
                 }
 
-                log.Debug("Loop_Number: " + GlobalData.Loop_Number);
+                GlobalData.log.Debug("Loop_Number: " + GlobalData.Loop_Number);
 
 				DisposeRam();
                 GlobalData.Loop_Number++;
@@ -10689,7 +10689,7 @@ namespace Woodpecker
 
         private void Myshot()
         {
-            log.Debug("Myshot: Start");
+            GlobalData.log.Debug("Myshot: Start");
             button_Start.Enabled = false;
             if (TakePicture == true && TakePictureError <= 3)
                 TakePictureError++;
@@ -10701,20 +10701,20 @@ namespace Woodpecker
                 //setStyle();
                 capture.FrameEvent2 += new Capture.HeFrame(CaptureDone);
                 capture.GrapImg();
-                log.Debug("Myshot: Myshot");
+                GlobalData.log.Debug("Myshot: Myshot");
             }
         }
 
         // 複製原始圖片
         protected Bitmap CloneBitmap(Bitmap source)
         {
-            log.Debug("Myshot: CloneBitmap");
+            GlobalData.log.Debug("Myshot: CloneBitmap");
             return new Bitmap(source);
         }
 
         private void CaptureDone(System.Drawing.Bitmap e)
         {
-            log.Debug("Myshot: CaptureDone");
+            GlobalData.log.Debug("Myshot: CaptureDone");
             capture.FrameEvent2 -= new Capture.HeFrame(CaptureDone);
             string fName = ini12.INIRead(MainSettingPath, "Record", "VideoPath", "");
             //string ngFolder = "Schedule" + GlobalData.Schedule_Num + "_NG";
@@ -10800,12 +10800,12 @@ namespace Woodpecker
 
             string t = fName + "\\" + "pic-" + DateTime.Now.ToString("yyyyMMddHHmmss") + "(" + label_LoopNumber_Value.Text + "-" + GlobalData.caption_Num + ").jpeg";
             pictureBox4.Image.Save(t, ImageFormat.Jpeg);
-            log.Debug("Save the CaptureDone Picture");
+            GlobalData.log.Debug("Save the CaptureDone Picture");
             button_Start.Enabled = true;
             TakePicture = false;
             TakePictureError = 0;
             //setStyle();
-            log.Debug("Stop the CaptureDone function");
+            GlobalData.log.Debug("Stop the CaptureDone function");
         }
         #endregion
 
@@ -11823,22 +11823,22 @@ namespace Woodpecker
                     button_Camera.Enabled = false;
                 }
 
-                //if (ini12.INIRead(MainSettingPath, "Device", "CA310Exist", "") == "1" || ini12.INIRead(MainSettingPath, "Device", "CA410Exist", "") == "1")
-                //{
-                //    if (CA210.Status() == false)
-                //    {
-                //        CA210.Connect();
-                //        if (CA210.Status() == false)
-                //        {
-                //            MessageBox.Show("Minolta is not connected!\r\nPlease restart the OPTT to reload the device.", "Connection Error");
-                //            pictureBox_Minolta.Image = Properties.Resources.OFF;
-                //        }
-                //    }
-                //}
-                //else
-                //{
-                //    pictureBox_Minolta.Image = Properties.Resources.OFF;
-                //}
+                if (ini12.INIRead(MainSettingPath, "Device", "CA310Exist", "") == "1" || ini12.INIRead(MainSettingPath, "Device", "CA410Exist", "") == "1")
+                {
+                    if (CA210.Status() == false)
+                    {
+                        CA210.Connect();
+                        if (CA210.Status() == false)
+                        {
+                            MessageBox.Show("Minolta is not connected!\r\nPlease restart the Woodpecker to reload the device.", "Connection Error");
+                            pictureBox_Minolta.Image = Properties.Resources.OFF;
+                        }
+                    }
+                }
+                else
+                {
+                    pictureBox_Minolta.Image = Properties.Resources.OFF;
+                }
 
                 /* Hidden serial port.
                 button_SerialPort1.Visible = ini12.INIRead(MainSettingPath, "Port A", "Checked", "") == "1" ? true : false;
@@ -12489,9 +12489,9 @@ namespace Woodpecker
                 //setStyle();
                 SchedulePause.Reset();
 
-                log.Debug("Datagridview highlight.");
+                GlobalData.log.Debug("Datagridview highlight.");
                 GridUI(GlobalData.Scheduler_Row.ToString(), DataGridView_Schedule);//控制Datagridview highlight//
-                log.Debug("Datagridview scollbar.");
+                GlobalData.log.Debug("Datagridview scollbar.");
                 Gridscroll(GlobalData.Scheduler_Row.ToString(), DataGridView_Schedule);//控制Datagridview scollbar//
             }
             else

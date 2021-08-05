@@ -16,7 +16,6 @@ using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Management;
-using System.Reflection;                            //support BindingFlags
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -36,7 +35,6 @@ using System.ComponentModel;
 using Microsoft.VisualBasic.FileIO;
 using USB_VN1630A;
 using ModuleLayer;
-using log4net;
 
 namespace Woodpecker
 {
@@ -44,7 +42,6 @@ namespace Woodpecker
     {
         string MainSettingPath = GlobalData.MainSettingPath;
         //static string strPortA = "Port A", strPortB = "Port B", strPortC = "Port C", strPortD = "Port D", strPortE = "Port E", strPort = "Port C", strPortAll = "All", logText = "";
-        private static ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);        //log4net
 
         const int byteMessage_max_Hex = 16;
         const int byteMessage_max_Ascii = 256;
@@ -60,7 +57,7 @@ namespace Woodpecker
 
         public void LogDataReceiving(Mod_RS232 serialPort, string portConfig, byte portLF, ref string logText)
         {
-            log.Debug("LogDataReceiving start:" + portConfig);
+            GlobalData.log.Debug("LogDataReceiving start:" + portConfig);
             while (serialPort.IsOpen())
             {
                 int data_to_read = serialPort.GetRxBytes();
@@ -88,7 +85,7 @@ namespace Woodpecker
                 //else
                 //    logA_recorder(0x00,true); // tell log_recorder no more data for now.
             }
-            log.Debug("LogDataReceiving end:" + portConfig);
+            GlobalData.log.Debug("LogDataReceiving end:" + portConfig);
         }
 
         //byte[] byteMessage_A = new byte[Math.Max(byteMessage_max_Ascii, byteMessage_max_Hex)];
@@ -325,7 +322,7 @@ namespace Woodpecker
 
         public void LogDumpToFile(string portConfig, string portName, ref string logText)
         {
-            log.Debug("LogDumpToFile start:" + portName);
+            GlobalData.log.Debug("LogDumpToFile start:" + portName);
             string fName = "";
             // 讀取ini中的路徑
             fName = ini12.INIRead(GlobalData.MainSettingPath, "Record", "LogPath", "");
@@ -393,7 +390,7 @@ namespace Woodpecker
                     debug_text = String.Empty;
                     break;
             }*/
-            log.Debug("LogDumpToFile end:" + portName);
+            GlobalData.log.Debug("LogDumpToFile end:" + portName);
         }
     }
 
