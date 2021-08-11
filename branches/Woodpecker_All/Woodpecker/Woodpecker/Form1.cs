@@ -7757,6 +7757,7 @@ namespace Woodpecker
                                     string orginal_data = columns_serial;
                                     string xor8_data = algorithm.Medical_XOR8(orginal_data);
                                     Outputstring = orginal_data + xor8_data;
+                                    GlobalData.log.Debug("I2C_SEQ_Write: " + Outputstring + " (" + columns_remark + ")");
                                     byte[] Outputbytes = new byte[Outputstring.Split(' ').Count()];
                                     Outputbytes = HexConverter.StrToByte(Outputstring);
                                     byte DeviceAddr = Outputbytes[0];
@@ -7779,6 +7780,7 @@ namespace Woodpecker
                                     byte[] Readbytes = new byte[128];
                                     byte Readbyte;
                                     Outputstring = orginal_data + xor8_data;
+                                    GlobalData.log.Debug("I2C_SEQ_Write: " + Outputstring + " (" + columns_remark + ")");
                                     byte[] Outputbytes = new byte[Outputstring.Split(' ').Count()];
                                     Outputbytes = HexConverter.StrToByte(Outputstring);
                                     byte DeviceAddr = Outputbytes[0];
@@ -7803,6 +7805,7 @@ namespace Woodpecker
                                         {
                                             Getbytes[Getbytes.Length - 1] = checksum;
                                             string inputstring = BitConverter.ToString(Getbytes).Replace("-", " ");
+                                            GlobalData.log.Debug("I2C_SEQ_Read: " + inputstring + " (" + columns_remark + ")");
                                             dt = DateTime.Now;
                                             dataValue = "[Ftdi_Port_Receive] [" + dt.ToString("yyyy/MM/dd HH:mm:ss.fff") + "]  " + inputstring + "\r\n";
                                             logDumpping.LogCat(ref ftdi_text, dataValue);

@@ -14,6 +14,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Universal_Toolkit.Types;
+using Woodpecker;
 
 namespace Universal_Toolkit
 {
@@ -223,8 +224,10 @@ namespace Universal_Toolkit
                 return FtStatus;
             }
                 
-            Thread.Sleep(200);
+            Thread.Sleep(300);
             FtStatus = I2C_DeviceRead(FtHandle, (byte)(DeviceAddr >> 1), 128, buffer, out ByteTransfered, FtI2cTransferOptions.START_BIT | FtI2cTransferOptions.NACK_LAST_BYTE);
+            string inputstring = BitConverter.ToString(buffer).Replace("-", " ");
+            GlobalData.log.Debug("I2C_DeviceRead: " + inputstring);
             RDataLength = buffer[1];
             if (RDataLength > 0x7D)
             {
@@ -233,6 +236,7 @@ namespace Universal_Toolkit
             }
             else
             {
+                GlobalData.log.Debug("Error reading return length");
                 MessageBox.Show("Read 回傳長度錯誤");
                 FtStatus = FtResult.InvalidHandle;
             }
