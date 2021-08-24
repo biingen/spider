@@ -7990,7 +7990,16 @@ namespace Woodpecker
                             {
                                 // Astro指令
                                 byte[] startbit = new byte[7] { 0x05, 0x24, 0x20, 0x02, 0xfd, 0x24, 0x20 };
-                                PortA.Write(startbit, 0, 7);
+                                if (columns_comport == "A")
+                                    GlobalData.m_SerialPort_A.WriteDataOut(startbit, startbit.Length);
+                                else if (columns_comport == "B")
+                                    GlobalData.m_SerialPort_B.WriteDataOut(startbit, startbit.Length);
+                                else if (columns_comport == "C")
+                                    GlobalData.m_SerialPort_C.WriteDataOut(startbit, startbit.Length);
+                                else if (columns_comport == "D")
+                                    GlobalData.m_SerialPort_D.WriteDataOut(startbit, startbit.Length);
+                                else if (columns_comport == "E")
+                                    GlobalData.m_SerialPort_E.WriteDataOut(startbit, startbit.Length);
 
                                 // Astro指令檔案匯入
                                 string xmlfile = ini12.INIRead(MainSettingPath, "Record", "Generator", "");
@@ -8009,7 +8018,16 @@ namespace Woodpecker
                                                 byte[] timebit3 = Encoding.ASCII.GetBytes(timestrs[2]);
                                                 byte[] timebit4 = Encoding.ASCII.GetBytes(timestrs[3]);
                                                 byte[] timebit = new byte[4] { timebit1[1], timebit2[1], timebit3[1], timebit4[1] };
-                                                PortA.Write(timebit, 0, 4);
+                                                if (columns_comport == "A")
+                                                    GlobalData.m_SerialPort_A.WriteDataOut(timebit, timebit.Length);
+                                                else if (columns_comport == "B")
+                                                    GlobalData.m_SerialPort_B.WriteDataOut(timebit, timebit.Length);
+                                                else if (columns_comport == "C")
+                                                    GlobalData.m_SerialPort_C.WriteDataOut(timebit, timebit.Length);
+                                                else if (columns_comport == "D")
+                                                    GlobalData.m_SerialPort_D.WriteDataOut(timebit, timebit.Length);
+                                                else if (columns_comport == "E")
+                                                    GlobalData.m_SerialPort_E.WriteDataOut(timebit, timebit.Length);
                                             }
                                         }
                                         else
@@ -8024,7 +8042,16 @@ namespace Woodpecker
                                 }
 
                                 byte[] endbit = new byte[3] { 0x2c, 0x31, 0x03 };
-                                PortA.Write(endbit, 0, 3);
+                                if (columns_comport == "A")
+                                    GlobalData.m_SerialPort_A.WriteDataOut(endbit, endbit.Length);
+                                else if (columns_comport == "B")
+                                    GlobalData.m_SerialPort_B.WriteDataOut(endbit, endbit.Length);
+                                else if (columns_comport == "C")
+                                    GlobalData.m_SerialPort_C.WriteDataOut(endbit, endbit.Length);
+                                else if (columns_comport == "D")
+                                    GlobalData.m_SerialPort_D.WriteDataOut(endbit, endbit.Length);
+                                else if (columns_comport == "E")
+                                    GlobalData.m_SerialPort_E.WriteDataOut(endbit, endbit.Length);
                                 label_Command.Text = "(" + columns_command + ") " + columns_switch;
                             }
                             catch (Exception Ex)
